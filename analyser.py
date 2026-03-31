@@ -1,12 +1,12 @@
-from groq import Groq
+import google.generativeai as genai
 from dotenv import load_dotenv
 import os
 
 load_dotenv()
 
-client = Groq(
-    api_key=os.getenv("GROQ_API_KEY")
-)
+genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+
+model = genai.GenerativeModel("gemini-1.5-flash-latest")
 
 
 # 🔹 1. Summary
@@ -24,13 +24,8 @@ Cover:
 Contract:
 {contract_text}
 """
-
-    response = client.chat.completions.create(
-        model="llama-3.1-8b-instant",
-        messages=[{"role": "user", "content": prompt}]
-    )
-
-    return response.choices[0].message.content
+    response = model.generate_content(prompt)
+    return response.text
 
 
 # 🔹 2. Key Clauses
@@ -49,13 +44,8 @@ payment terms, termination, liability, confidentiality, intellectual property, d
 Contract:
 {contract_text}
 """
-
-    response = client.chat.completions.create(
-        model="llama-3.1-8b-instant",
-        messages=[{"role": "user", "content": prompt}]
-    )
-
-    return response.choices[0].message.content
+    response = model.generate_content(prompt)
+    return response.text
 
 
 # 🔹 3. Risk Flags
@@ -78,13 +68,8 @@ For each risk:
 Contract:
 {contract_text}
 """
-
-    response = client.chat.completions.create(
-        model="llama-3.3-70b-versatile",
-        messages=[{"role": "user", "content": prompt}]
-    )
-
-    return response.choices[0].message.content
+    response = model.generate_content(prompt)
+    return response.text
 
 
 # 🔹 4. Questions
@@ -100,10 +85,5 @@ Focus on:
 Contract:
 {contract_text}
 """
-
-    response = client.chat.completions.create(
-        model="llama-3.1-8b-instant",
-        messages=[{"role": "user", "content": prompt}]
-    )
-
-    return response.choices[0].message.content
+    response = model.generate_content(prompt)
+    return response.text

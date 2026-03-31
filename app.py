@@ -4,11 +4,9 @@ import os
 from datetime import datetime
 from document_reader import extract_text
 from analyser import summarise_contract, identify_clauses, flag_risks, suggest_questions
-from groq import Groq
 from dotenv import load_dotenv
 
 load_dotenv()
-client = Groq()
 
 # ── Page config ──────────────────────────────────────────────
 st.set_page_config(

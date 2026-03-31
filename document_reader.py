@@ -21,9 +21,9 @@ def read_docx(file_path):
 
 
 def extract_text(file_path):
-    if file_path.endswith('.pdf'):
+    if file_path.lower().endswith('.pdf'):
         return read_pdf(file_path)
-    elif file_path.endswith('.docx'):
+    elif file_path.lower().endswith('.docx'):
         return read_docx(file_path)
     else:
         raise ValueError("Only PDF and DOCX supported")
