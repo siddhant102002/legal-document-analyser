@@ -1,118 +1,67 @@
-# AI Legal Document Analyser
+# ⚖️ AI Legal Document Analyser
 
-An AI-powered tool that helps users understand legal contracts by providing a clear summary, key clauses, risk analysis, and important questions before signing.
+An AI-powered legal document analysis tool built with Streamlit and Claude AI. Upload any contract and get an instant, plain-English breakdown — no legal background needed.
 
-## Demo
+## 🔍 Features
 
-Demo video will be added here.
+- **Contract Summary** — plain English overview of what the contract says
+- **Key Clauses** — all important clauses identified and explained
+- **Risk Flags** — one-sided or unfair clauses highlighted
+- **Questions to Ask** — 8 smart questions to ask before signing
+- **Chat with Contract** — ask anything about your document in real time
+- **Download Report** — full analysis exported as a text file
 
----
+## 🛠 Tech Stack
 
-## Features
+- Python
+- Streamlit
+- Anthropic Claude API (claude-sonnet-4-5)
+- PyPDF2 / python-docx for document parsing
+- Concurrent processing for fast parallel analysis
 
-- ✅ **Handles any file size** - Intelligent chunking for large documents (100K+ characters)
-- ✅ **Free AI** - Uses Gemini 1.5 Flash (no cost, generous limits)
-- ✅ **Identifies key clauses** - termination, confidentiality, liability, obligations, etc.
-- ✅ **Plain English summaries** - Easy to understand for non-lawyers
-- ✅ **Risk analysis** - Highlights one-sided terms, unfair clauses, missing protections
-- ✅ **Smart questions** - Important questions to ask before signing
-- ✅ **PDF & Word support** - Upload contracts in either format
-- ✅ **Download report** - Full analysis saved as text file
-- ✅ **Robust** - Automatic retry for rate limits, clear error messages
+## 🚀 Getting Started
 
----
-
-## Technologies
-
-- **Google Gemini 1.5 Flash** (Free API)
-- Python  
-- Streamlit  
-- pypdf  
-- python-docx  
-
----
-
-## How It Works
-
-The application follows a simple 4-step process:
-
-1. **Upload**  
-   The user uploads a contract in PDF or Word format  
-
-2. **Extract**  
-   The system extracts all text from the document using document parsing libraries  
-
-3. **Analyse**  
-   The extracted text is sent to **Gemini 1.5 Flash** (free), which performs:
-   - Contract summarisation  
-   - Clause identification  
-   - Risk analysis  
-   - Question generation  
-
-   **Large document support**: Documents larger than 100K characters are automatically split into overlapping chunks for comprehensive analysis. The AI intelligently combines results from all chunks.
-
-4. **Report**  
-   Results are displayed in a structured format across multiple tabs, with an option to download the full report  
-
-**Flow**: Upload → Extract → Analyse → Report  
-
----
-
-## Setup Instructions
-
-Follow these steps to run the project locally:
-
-### 1. Get a Free Gemini API Key
-
-- Visit [Google AI Studio](https://aistudio.google.com/app/apikey)
-- Sign in with your Google account
-- Click **Get API Key** → **Create API Key**
-- This is **completely free** with generous rate limits
-
-### 2. Clone and Install
-
+### 1. Clone the repo
 ```bash
 git clone https://github.com/siddhant102002/legal-document-analyser.git
 cd legal-document-analyser
+```
+
+### 2. Install dependencies
+```bash
 pip install -r requirements.txt
 ```
 
-### 3. Configure API Key
+### 3. Set up your API key
 
-Create a `.env` file in the project root:
-
-```env
-GEMINI_API_KEY=your_api_key_here
+Create a `.env` file in the root folder:
+```
+ANTHROPIC_API_KEY=your_api_key_here
 ```
 
-**Important**: Never commit your `.env` file. It's already in `.gitignore`.
+Get your API key from [console.anthropic.com](https://console.anthropic.com)
 
-### 4. Run the Application
-
+### 4. Run the app
 ```bash
 streamlit run app.py
-# or
-python -m streamlit run app.py
 ```
 
-Open the browser link shown in the terminal (usually http://localhost:8501)
+## 📁 Project Structure
+```
+legal-document-analyser/
+├── app.py                  # Main Streamlit app
+├── analyser.py             # Claude AI analysis functions
+├── document_reader.py      # PDF and DOCX text extraction
+├── requirements.txt        # Dependencies
+├── .env                    # API key (not committed)
+├── .gitignore              # Git ignore rules
+└── README.md               # This file
+```
 
----
+## ⚠️ Disclaimer
 
-## Use Cases
+This tool provides AI-generated analysis for informational purposes only. It is not legal advice. Always consult a qualified solicitor before signing any contract.
 
-This tool can be used by:
+## 👨‍💻 Built by
 
-- Freelancers reviewing client contracts before signing  
-- Small businesses without access to legal teams  
-- Individuals reviewing rental or lease agreements  
-- Students learning about legal documents  
-- Anyone who wants a quick understanding of complex contracts  
-
----
-
-## Disclaimer
-
-This tool provides AI-powered analysis for informational purposes only.
-
-It is not a substitute for professional legal advice. Always consult a qualified legal professional before making decisions based on any contract.
+Siddhant Tayade — [LinkedIn](https://linkedin.com/in/siddhant-tayade-1b92a2396) · [GitHub](https://github.com/siddhant102002)
