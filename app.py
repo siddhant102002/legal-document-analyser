@@ -103,13 +103,16 @@ if uploaded_file and st.button("Analyse Contract", type="primary"):
         os.unlink(temp_path)
 
     # ── File size check ───────────────────────────────────────
+    # Gemini 1.5 Flash supports up to 128K tokens, we'll use 100K characters
+    MAX_CHARS = 100000
     truncated = False
-    if len(text) > 8000:
-        text = text[:8000]
+    if len(text) > MAX_CHARS:
+        st.warning(f"📄 Document is very large ({len(text):,} characters). Analysing first {MAX_CHARS:,} characters. For best results, consider splitting large contracts into sections.")
+        text = text[:MAX_CHARS]
         truncated = True
 
-    if truncated:
-        st.info("Document is very long. Analysing first portion.")
+    if not truncated and len(text) > 50000:
+        st.info(f"📊 Document size: {len(text):,} characters. Analysis may take longer.")
 
     if len(text) < 50:
         st.error("Could not extract enough text from this document. Please try a different file.")
@@ -127,21 +130,33 @@ if uploaded_file and st.button("Analyse Contract", type="primary"):
     try:
         progress.progress(10, text="Summarising contract...")
         summary = summarise_contract(text)
+        progress.progress(30, text="Key clauses...")
 
-        progress.progress(35, text="Identifying key clauses...")
+        progress.progress(50, text="Identifying key clauses...")
         clauses = identify_clauses(text)
 
-        progress.progress(60, text="Flagging risks...")
+        progress.progress(70, text="Flagging risks...")
         risks = flag_risks(text)
 
-        progress.progress(85, text="Generating questions...")
+        progress.progress(90, text="Generating questions...")
         questions = suggest_questions(text)
 
         progress.progress(100, text="Analysis complete!")
 
+    except genai.types.BlockedPromptException:
+        st.error("❌ Content blocked by safety filters. Try a different document.")
+        st.stop()
     except Exception as e:
-        st.error("Analysis failed. Please try again.")
-        st.caption(f"Error detail: {e}")
+        error_msg = str(e)
+        if "429" in error_msg or "quota" in error_msg.lower():
+            st.error("⚠️ API quota exceeded. Please wait a moment and try again, or check your API key.")
+            st.info("💡 Tip: The free tier has rate limits. If this persists, consider upgrading your plan.")
+        elif "api_key" in error_msg.lower() or "invalid" in error_msg.lower():
+            st.error("🔑 Invalid API key. Please check your `.env` file and ensure your GEMINI_API_KEY is correct.")
+        elif "timeout" in error_msg.lower() or "deadline" in error_msg.lower():
+            st.error("⏱️ Request timed out. The document may be too complex. Try a smaller file.")
+        else:
+            st.error(f"❌ Analysis failed: {e}")
         st.stop()
 
     # ── Results tabs ──────────────────────────────────────────

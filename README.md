@@ -10,17 +10,21 @@ Demo video will be added here.
 
 ## Features
 
-- Identifies key clauses such as termination, confidentiality, liability, and obligations  
-- Summarises contracts in plain, easy-to-understand language  
-- Highlights potential risks, one-sided terms, and missing protections  
-- Suggests important questions to ask before signing  
-- Supports both PDF and Word document uploads  
+- ✅ **Handles any file size** - Intelligent chunking for large documents (100K+ characters)
+- ✅ **Free AI** - Uses Gemini 1.5 Flash (no cost, generous limits)
+- ✅ **Identifies key clauses** - termination, confidentiality, liability, obligations, etc.
+- ✅ **Plain English summaries** - Easy to understand for non-lawyers
+- ✅ **Risk analysis** - Highlights one-sided terms, unfair clauses, missing protections
+- ✅ **Smart questions** - Important questions to ask before signing
+- ✅ **PDF & Word support** - Upload contracts in either format
+- ✅ **Download report** - Full analysis saved as text file
+- ✅ **Robust** - Automatic retry for rate limits, clear error messages
 
 ---
 
 ## Technologies
 
-- Google Gemini API  
+- **Google Gemini 1.5 Flash** (Free API)
 - Python  
 - Streamlit  
 - pypdf  
@@ -32,25 +36,25 @@ Demo video will be added here.
 
 The application follows a simple 4-step process:
 
-1. Upload  
+1. **Upload**  
    The user uploads a contract in PDF or Word format  
 
-2. Extract  
+2. **Extract**  
    The system extracts all text from the document using document parsing libraries  
 
-3. Analyse  
-   The extracted text is sent to an AI model (Gemini API), which performs:
+3. **Analyse**  
+   The extracted text is sent to **Gemini 1.5 Flash** (free), which performs:
    - Contract summarisation  
    - Clause identification  
    - Risk analysis  
    - Question generation  
 
-4. Report  
+   **Large document support**: Documents larger than 100K characters are automatically split into overlapping chunks for comprehensive analysis. The AI intelligently combines results from all chunks.
+
+4. **Report**  
    Results are displayed in a structured format across multiple tabs, with an option to download the full report  
 
-Flow:
-
-Upload → Extract → Analyse → Report  
+**Flow**: Upload → Extract → Analyse → Report  
 
 ---
 
@@ -58,22 +62,40 @@ Upload → Extract → Analyse → Report
 
 Follow these steps to run the project locally:
 
-1. Clone the repository  
-   git clone https://github.com/siddhant102002/legal-document-analyser.git  
-   cd legal-document-analyser  
+### 1. Get a Free Gemini API Key
 
-2. Install dependencies  
-   pip install -r requirements.txt  
+- Visit [Google AI Studio](https://aistudio.google.com/app/apikey)
+- Sign in with your Google account
+- Click **Get API Key** → **Create API Key**
+- This is **completely free** with generous rate limits
 
-3. Create a `.env` file in the root directory and add your API key  
-   GEMINI_API_KEY=your_api_key_here  
+### 2. Clone and Install
 
-4. Run the application  
-   python -m streamlit run app.py  
+```bash
+git clone https://github.com/siddhant102002/legal-document-analyser.git
+cd legal-document-analyser
+pip install -r requirements.txt
+```
 
-5. Open the browser link shown in the terminal  
+### 3. Configure API Key
 
-The app should now be running locally  
+Create a `.env` file in the project root:
+
+```env
+GEMINI_API_KEY=your_api_key_here
+```
+
+**Important**: Never commit your `.env` file. It's already in `.gitignore`.
+
+### 4. Run the Application
+
+```bash
+streamlit run app.py
+# or
+python -m streamlit run app.py
+```
+
+Open the browser link shown in the terminal (usually http://localhost:8501)
 
 ---
 
