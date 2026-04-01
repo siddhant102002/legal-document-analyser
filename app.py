@@ -11,6 +11,7 @@ load_dotenv()
 
 api_key = os.getenv("ANTHROPIC_API_KEY") or st.secrets.get("ANTHROPIC_API_KEY")
 client = anthropic.Anthropic(api_key=api_key)
+MODEL = "claude-sonnet-4-5"
 
 st.set_page_config(
     page_title="AI Legal Document Analyser",
