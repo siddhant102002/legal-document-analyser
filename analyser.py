@@ -7,7 +7,10 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 load_dotenv()
 
-client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
+import streamlit as st
+api_key = os.getenv("ANTHROPIC_API_KEY") or st.secrets.get("ANTHROPIC_API_KEY")
+client = anthropic.Anthropic(api_key=api_key)
+
 MODEL = "claude-sonnet-4-5"
 
 
